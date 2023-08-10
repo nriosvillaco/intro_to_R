@@ -24,7 +24,7 @@ a="7"
 b = tryCatch(sqrt(abs(a)),error=function(e){"Not a number"})
 
 #Q7 - mutate, can you create a new variable?
-yes
+#yes
 
 #Q8
 #install packages

@@ -1,5 +1,7 @@
 #CompleteData
-CompleteData=read.table("C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/CompleteData.csv",sep=",",header=TRUE)
+library(here)
+completedata_filepath <- here("data", "CompleteData.csv")
+CompleteData=read.table(completedata_filepath, sep=",", header=TRUE)
 
 #Q1 - histogram of systolic bp
 hist(CompleteData$Systolic,xlab="Systolic blood pressure (mmHG)",ylab="Observed frequency",main="")
@@ -67,7 +69,8 @@ plot(Q9Data$Systolic,SMARTRISK(Q9Data), xlab="Systolic blood pressure (mmHG)",yl
 #Q10 - modified imputation, explore association between smoking status (outcome) and yrs since 1st diagnosis (Yrs)
 library(mice)
 library(readxl)
-IncompleteData=read_excel("C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/IncompleteData.xlsx")
+incompletedata_filepath <- here("data", "IncompleteData.xlsx")
+IncompleteData=read_excel(incompletedata_filepath)
 set.seed(3)
 imputed = mice(IncompleteData,m=5) 
 fit = with(data=imputed,lm(Smoker~Yrs))

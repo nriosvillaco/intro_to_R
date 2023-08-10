@@ -1,9 +1,7 @@
 print("My first programming line")
-Print("Testing my first programming line")
 print(2); print(3)
 #variables
 ID="PC24601"
-27x=1
 #comparisons
 a=2<3
 b=2>3
