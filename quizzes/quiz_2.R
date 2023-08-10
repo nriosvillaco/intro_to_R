@@ -1,3 +1,6 @@
+library(here)
+completedata_filepath <- here("data", "CompleteData.csv")
+
 #Q1 - NAnumber
 NAnumber=function(data)
 {
@@ -50,7 +53,7 @@ LDL.scenario2=function(LDL.percent.reductions)
 LDL.scenario2(LDL.percent.reductions)
 
 #Q6 - standard deviation of age of individuals
-CompleteData=read.table("C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/CompleteData.csv",sep=",",header=TRUE)
+CompleteData=read.table(completedata_filepath,sep=",",header=TRUE)
 diabetic.patients=CompleteData[CompleteData$Diabetic==1,]
 sd(diabetic.patients$Age)
 

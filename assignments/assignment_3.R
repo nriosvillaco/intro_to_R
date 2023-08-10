@@ -1,3 +1,5 @@
+library(here)
+
 #SMARTRISK
 SMARTRISK = function(Data)
 {
@@ -11,7 +13,8 @@ SMARTRISK = function(Data)
 
 #Q1 - sumtable grouped by Race.Ethn
 #read CompleteData
-CompleteData=read.table("C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/CompleteData.csv",sep=",",header=TRUE)
+completedata_filepath <- here("data", "CompleteData.csv")
+CompleteData=read.table(completedata_filepath,sep=",",header=TRUE)
 install.packages("vtable")
 library(vtable)
 sumtable(CompleteData,group='Race.Ethn',group.test=FALSE)
@@ -67,7 +70,8 @@ plot(systolic.values,RxSBP,xlab="Systolic Blood Pressure (mmHG)",ylab="10-year R
 #Q10 - multiple imputation, explore association between HDL (outcome) and yrs since 1st diagnosis (Yrs)
 library(mice)
 library(readxl)
-IncompleteData=read_excel("C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/IncompleteData.xlsx")
+incompletedata_filepath <- here("data", "IncompleteData.xlsx")
+IncompleteData=read_excel(incompletedata_filepath)
 set.seed(2)
 imputed = mice(IncompleteData,m=5) 
 fit = with(data=imputed,lm(HDL~Yrs))

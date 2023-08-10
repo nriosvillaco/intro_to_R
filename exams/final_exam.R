@@ -1,4 +1,6 @@
-data=read.table("C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/CompleteData.csv",sep=",",header=TRUE)
+library(here)
+completedata_filepath <- here("data", "CompleteData.csv")
+data=read.table(completedata_filepath,sep=",",header=TRUE)
 
 #Q1 - sig test for diff in mean value of loghCRP
 NonH.Bl=data[data$Race.Ethn=="Non-H Black",]
@@ -13,11 +15,11 @@ t.test(Bl.loghsCRP,Wh.loghsCRP)
   #blank 3 - IS
 
 #Q2 - boxplot, individ. w/ diabetes, logHSCRP statified by smoking status
-data=read.table("C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/CompleteData.csv",sep=",",header=TRUE)
+data=read.table(completedata_filepath,sep=",",header=TRUE)
 boxplot(loghsCRP~Diabetic, data=data, xlab="Smoking Status (0=no; 1=yes)",main="Log(hsCRP) by Smoking Status Among Individuals with Diabetes")
 
 #Q3 - chi square test
-data=read.table("C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/CompleteData.csv",sep=",",header=TRUE)
+data=read.table(completedata_filepath,sep=",",header=TRUE)
 hsCRPdata=data
   #convert loghsCRP to hsCRP
 hsCRPdata$loghsCRP=exp(hsCRPdata$loghsCRP)
@@ -35,10 +37,11 @@ for (i in 1:2000)
 chisq.test(hsCRPdata$Smoker,below2)
 
 #Q4 - (a) extract only smokers AND tchol > 6, (b) save extracted data into csv
-data=read.table("C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/CompleteData.csv",sep=",",header=TRUE)
+data=read.table(completedata_filepath,sep=",",header=TRUE)
 data2=data[data$TCHOL>6 & data$Smoker==1,]
 length(data2$TheID)
-write.table(data2,"C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/SmokerHighTotalCholesterolData.csv",sep=",", col.names=T, row.names=F)
+SmokerHighTotalCholesterolData_filepath <- here("data", "SmokerHighTotalCholesterolData.csv")
+write.table(data2,SmokerHighTotalCholesterolData_filepath,sep=",", col.names=T, row.names=F)
 
 #Q5 - debug code
 index=1

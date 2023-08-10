@@ -1,5 +1,7 @@
 #CompleteData
-CompleteData=read.table("C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/CompleteData.csv",sep=",",header=TRUE)
+library(here)
+completedata_filepath <- here("data", "CompleteData.csv")
+CompleteData=read.table(completedata_filepath,sep=",",header=TRUE)
 
 #SMARTRISK function
 SMARTRISK = function(Data)
@@ -98,7 +100,8 @@ for(i in 1:2000)
   risk.10yr=c(risk.10yr,SMARTRISK(CompleteData[i,]))
 }
 output=data.frame(smoking.status,risk.10yr)
-write.table(output,"C:/Users/narv1/Documents/MHIA/HCIP 5376/Quizzes/output.csv",sep=",",col.names=T,row.names=F)
+output_filepath <- here("data", "output.csv")
+write.table(output,output_filepath,sep=",",col.names=T,row.names=F)
 
 #Q9 - num patients w/ TCHOL >6 OR (65+ yrs AND diabetic)
 print(sum((CompleteData[,"TCHOL"]>6)|((CompleteData[,"Age"]>65)&(CompleteData[,"Diabetic"]==1))))
