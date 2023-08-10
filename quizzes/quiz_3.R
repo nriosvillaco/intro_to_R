@@ -1,7 +1,7 @@
 #CompleteData
 library(here)
 completedata_filepath <- here("data", "CompleteData.csv")
-CompleteData=read.table(data_filepath, sep=",", header=TRUE)
+CompleteData=read.table(completedata_filepath, sep=",", header=TRUE)
 
 #Q1 - histogram of systolic bp
 hist(CompleteData$Systolic,xlab="Systolic blood pressure (mmHG)",ylab="Observed frequency",main="")
