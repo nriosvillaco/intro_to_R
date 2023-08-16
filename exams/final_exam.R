@@ -1,4 +1,7 @@
 library(here)
+library(ggplot2)
+
+#CompleteDate
 completedata_filepath <- here("data", "CompleteData.csv")
 data=read.table(completedata_filepath,sep=",",header=TRUE)
 
@@ -60,14 +63,14 @@ sum(A$household.size==max(A$household.size))
 "only tuples and lists"
 
 #Q8 - debug code, provide (a) line number, (b) error(s), (c) corrections needed
-library(gplot2)
-ggplot(data=A, aes(x=household.size, y=income, fill=household.size)) +
-geom_bar(colour="green", fill="blue", size=1, stat="identity") 
-xlab("Household Size (# of persons)") + 
-yleb("Income (thousands of dollars)") +
-ggtitle("Income by Household Size")
+# library(gplot2)
+# ggplot(data=A, aes(x=household.size, y=income, fill=household.size)) +
+# geom_bar(colour="green", fill="blue", size=1, stat="identity") 
+# xlab("Household Size (# of persons)") + 
+# yleb("Income (thousands of dollars)") +
+# ggtitle("Income by Household Size")
   #edited code should be:
-library(ggplot2)
+# library(ggplot2)
 ggplot(A, aes(x=household.size, y=income)) +
   geom_bar(aes(colour="green", fill="blue", size=1, stat="identity")) +
   xlab("Household Size (# of persons)") + 

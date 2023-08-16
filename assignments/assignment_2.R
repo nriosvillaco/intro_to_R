@@ -1,5 +1,6 @@
-#CompleteData
 library(here)
+
+#CompleteData
 completedata_filepath <- here("data", "CompleteData.csv")
 CompleteData=read.table(completedata_filepath,sep=",",header=TRUE)
 
