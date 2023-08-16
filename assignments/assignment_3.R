@@ -1,4 +1,9 @@
+#install.packages(c("vtable","moments"))
 library(here)
+library(vtable)
+library(moments)
+library(mice)
+library(readxl)
 
 #SMARTRISK
 SMARTRISK = function(Data)
@@ -15,8 +20,6 @@ SMARTRISK = function(Data)
 #read CompleteData
 completedata_filepath <- here("data", "CompleteData.csv")
 CompleteData=read.table(completedata_filepath,sep=",",header=TRUE)
-install.packages("vtable")
-library(vtable)
 sumtable(CompleteData,group='Race.Ethn',group.test=FALSE)
 
 #Q2 - histogram of 10-yr risk of recurrent CVD event for Non-H White
@@ -52,8 +55,6 @@ f=function(Systolic)
 optim(0,f,method="L-BFGS-B")
 
 #Q8 - skewness
-install.packages("moments")
-library(moments)
 skewness(SMARTRISK(CompleteData))
 
 #Q9 - benefits of reducing systolic bp
@@ -68,8 +69,6 @@ for (i in 101:200)
 plot(systolic.values,RxSBP,xlab="Systolic Blood Pressure (mmHG)",ylab="10-year Risk of Recurrent CVD Event")
 
 #Q10 - multiple imputation, explore association between HDL (outcome) and yrs since 1st diagnosis (Yrs)
-library(mice)
-library(readxl)
 incompletedata_filepath <- here("data", "IncompleteData.xlsx")
 IncompleteData=read_excel(incompletedata_filepath)
 set.seed(2)

@@ -1,6 +1,7 @@
-#Q1
-install.packages("methods")
+#install.packages(c("dplyr","textdata","tm","RColorBrewer","wordcloud","wordcloud2","tidyverse","methods"))
 library(methods)
+
+#Q1
 setClass("CHOL",slots=list(Name="character",HDL="numeric"))
 patientdata=new("CHOL",Name="Norm Niner",HDL=c(5.4,5.2,6.2))
 
@@ -28,7 +29,6 @@ b = tryCatch(sqrt(abs(a)),error=function(e){"Not a number"})
 
 #Q8
 #install packages
-install.packages(c("dplyr","textdata","tm","RColorBrewer","wordcloud","wordcloud2","tidyverse"))
 lapply(c("dplyr","textdata","tm","RColorBrewer","wordcloud","wordcloud2","tidyverse"),require, character.only=TRUE)
 data = dataset_ag_news()
 text =  dplyr::filter(data,grepl('bird flu',description))

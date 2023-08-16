@@ -1,4 +1,8 @@
+#install.packages("Hmisc")
+library(Hmisc)
 library(here)
+
+#CompleteData
 completedata_filepath <- here("data", "CompleteData.csv")
 
 #Q1 - NAnumber
@@ -13,8 +17,6 @@ data=c(0,17)
 
 #Q2 - impute function
 vector = c(1,2,3,1,NA,2,1,1,1,NA,3,3,2,3,3,4,5,NA)
-install.packages("Hmisc")
-library(Hmisc)
 impute(vector,median)
 
 #Q3 - netpayment logical

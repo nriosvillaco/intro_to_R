@@ -1,5 +1,11 @@
-#CompleteData
+#install.packages(c("lattice","tidyverse")
+library(lattice)
+library(tidyverse)
 library(here)
+library(mice)
+library(readxl)
+
+#CompleteData
 completedata_filepath <- here("data", "CompleteData.csv")
 CompleteData=read.table(completedata_filepath, sep=",", header=TRUE)
 
@@ -10,8 +16,6 @@ hist(CompleteData$Systolic,xlab="Systolic blood pressure (mmHG)",ylab="Observed 
 abline(v=100)
 
 #Q3 - ggplot
-install.packages("tidyverse")
-library(tidyverse) # This library includes ggplot2
 df=data.frame(CompleteData$Systolic)
 ggplot(df, aes(CompleteData$Systolic)) + geom_histogram(aes(y=..density..), colour="black",fill="white") + geom_density(alpha=.2, fill="blue")
 
@@ -56,8 +60,6 @@ f = function(Age,eGFR)
   SMARTRISK(Patient)
 }
 Risk = outer(Age,eGFR,f) # Calculates the function SMARTRISK over each possible Age & eGFR
-install.packages("lattice")
-library(lattice)
 levelplot(Risk,row.values=Age,column.values=eGFR,xlab="Age",ylab="eGFR",col.regions=rev(heat.colors(100)),colorkey=list(col=rev(heat.colors(100))))
 
 
@@ -67,8 +69,6 @@ plot(Q9Data$Systolic,SMARTRISK(Q9Data), xlab="Systolic blood pressure (mmHG)",yl
 
 
 #Q10 - modified imputation, explore association between smoking status (outcome) and yrs since 1st diagnosis (Yrs)
-library(mice)
-library(readxl)
 incompletedata_filepath <- here("data", "IncompleteData.xlsx")
 IncompleteData=read_excel(incompletedata_filepath)
 set.seed(3)

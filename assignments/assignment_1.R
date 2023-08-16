@@ -1,3 +1,6 @@
+#install.packages("psych")
+library(psych)
+
 #Q1 - create SMARTRISK function
 SMARTRISK=function(Data)
 {
@@ -131,7 +134,5 @@ Parameter=data.frame(age,age2,male,smoker,systolic,diabetic,CAD,CVD,AAA,PAD,yrs,
 SMARTRISK(PATIENT1)-SMARTRISK2(Parameter,PATIENT1)
 
 #Q10 - geometric.mean
-install.packages("psych")
-library(psych)
 x=as.numeric(c(SMARTRISK(PATIENT1),SMARTRISK(PATIENT2)))
 geometric.mean(x)
