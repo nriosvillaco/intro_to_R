@@ -2,37 +2,39 @@
 library(Hmisc)
 library(here)
 
-#CompleteData
+#load CompleteData
 completedata_filepath <- here("data", "CompleteData.csv")
+CompleteData=read.table(completedata_filepath,sep=",",header=TRUE)
 
-#Q1 - NAnumber
+#create NAnumber function calculating number of NA's in a vector
 NAnumber=function(data)
 {
   NAnumber=sum(is.na(data))
   return(NAnumber)
 }
-
-#Example Vector for Q1
+#test vector
 data=c(0,17)
 
-#Q2 - impute function
+#use impute() to impute missing values of vector
 vector = c(1,2,3,1,NA,2,1,1,1,NA,3,3,2,3,3,4,5,NA)
 impute(vector,median)
 
-#Q3 - netpayment logical
+#create logical statement covering all positive values associated with overpayment and underpayment
 evaluatepayment = function(netpayment)
 {
   if(netpayment>0){return("overpayment")}else{
     if(netpayment==0){return("exact payment")}else{return("underpayment")}
   }
 }
-
-evaluatepayment(netpayment)
+#test
 netpayment=-5
+evaluatepayment(netpayment)
 netpayment=3
-netpayment=0 #should be "exact payment", fixed above
+evaluatepayment(netpayment)
+netpayment=0
+evaluatepayment(netpayment)
 
-#Q4 - LDL.scenario
+#use a for loop to calculate ratios of HDL/Implied.LDL for different LDL.scenarios
 HDL=200
 LDL=200
 LDL.scenario=seq(0,-0.75,-0.05)
@@ -42,7 +44,7 @@ for (LDL.percent.reductions in LDL.scenario)
   print(HDL/Implied.LDL)
 }
 
-#Q5 - LDL.scenario2
+#create function for above task without for loops but rather, vectors
 HDL=200
 LDL=200
 LDL.percent.reductions=seq(0,-0.75,-0.05)
@@ -54,12 +56,11 @@ LDL.scenario2=function(LDL.percent.reductions)
 }
 LDL.scenario2(LDL.percent.reductions)
 
-#Q6 - standard deviation of age of individuals
-CompleteData=read.table(completedata_filepath,sep=",",header=TRUE)
+#calculate standard deviation of the age among diabetic individuals
 diabetic.patients=CompleteData[CompleteData$Diabetic==1,]
 sd(diabetic.patients$Age)
 
-#Q7 - 2+ conditions among CAD, CVD, AAA, PAD
+#calculate number of patients with >=2 conditions among CAD, CVD, AAA, and PAD
 num.conditions=as.numeric()
 for (i in 1:2000)
 {
@@ -68,7 +69,7 @@ for (i in 1:2000)
 }
 sum((num.conditions)>=2)
 
-#Q8 - while loop
+#use a while loop to create a program identifying the first case of over-80 smoker with CAD, CVD, and AAA
 smoker80=CompleteData[CompleteData$Smoker==1 & CompleteData$Age>80,]
 which.row=1
 while(sum(smoker80[which.row,7:9])!=3)
@@ -77,10 +78,10 @@ while(sum(smoker80[which.row,7:9])!=3)
 }
 print(smoker80[which.row,1])
 
-#Q9 - 100th male systolic
+#identify systolic bp of 100th male
 CompleteData.male=CompleteData[CompleteData$Male==1,]
 male.100=c(CompleteData.male[100,])
 print(male.100$Systolic)
 
-#Q10 - hsCRP
+#calculate mean hsCRP across patients
 mean(exp(CompleteData$loghsCRP))
