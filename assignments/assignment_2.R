@@ -15,19 +15,19 @@ SMARTRISK = function(Data)
   return((1-0.81066^exp(Linear.predictor + 2.099))*100)
 }
 
-#Q1 - avg risk for w/ & w/o diabetes
+#calculate avg risk for w/ & w/o diabetes
 #w/ diabetes
 mean(SMARTRISK(CompleteData[CompleteData$Diabetic==1,]))
 #w/o diabetes
 mean(SMARTRISK(CompleteData[CompleteData$Diabetic==0,]))
 
-#Q2 - males who smoke vs. non-smoking females
+#show risk between males who smoke vs. non-smoking females
 #males who smoke
 mean(SMARTRISK(CompleteData[CompleteData$Male==1 & CompleteData$Smoker==1,]))
 #nonsmoking females
 mean(SMARTRISK(CompleteData[CompleteData$Male==0 & CompleteData$Smoker==0,]))
 
-#Q3 - Patient 8 systolic reductions
+#for patient 8, demonstrate effect of each unit reduction of mmHg on risk of recurring event
 DataQ3=CompleteData
 systolic.reduction = seq(0,-60,-1) # unit reductions in systolic bp
 for (systolic.reduction in systolic.reduction)
@@ -38,7 +38,7 @@ for (systolic.reduction in systolic.reduction)
   #Return a vector with The SMARTRISK reduction (values going from 0 to 60) 
 }
 
-#Q4 - average ages, 80% risk
+#calculate average age of patients with at least an 80% risk
 age.risk80up=as.numeric()
 age.riskless80=as.numeric()
 for (i in 1:2000)
@@ -59,7 +59,7 @@ mean(age.risk80up)
 # average age of those with less than an 80% 10-year risk
 mean(age.riskless80)
 
-#Q5 - mean risks by race/ethnicity
+#calculate mean risks by race/ethnicity
 r.ethn=unique(CompleteData$Race.Ethn)
 risk.r.ethn=c()
 for (i in 1:4)
@@ -69,7 +69,7 @@ for (i in 1:4)
 }
 print(risk.r.ethn)
 
-#Q6 - first Hispanic patient w/ tchol >6
+#find first Hispanic patient w/ tchol >6
 Data.Hispanic=CompleteData[CompleteData$Race.Ethn=="Hispanic",]
 which.row=1
 while(Data.Hispanic[which.row,"TCHOL"]<=6)
@@ -78,7 +78,7 @@ while(Data.Hispanic[which.row,"TCHOL"]<=6)
 }
 print(Data.Hispanic[which.row,"TheID"])
 
-#Q7 - IDs of all Hispanic patients w/ TCHOL >6
+#print IDs of all Hispanic patients w/ TCHOL >6
 Data.Hispanic=CompleteData[CompleteData$Race.Ethn=="Hispanic",]
 Hispanic.TCHOL.above6=as.numeric()
 for (i in 1:dim(Data.Hispanic)[1])
@@ -92,7 +92,7 @@ for (i in 1:dim(Data.Hispanic)[1])
 }
 print(Hispanic.TCHOL.above6)
 
-#Q8 - output.csv of smoking status and risk value
+#create file called output.csv of smoking status and risk value for all patients
 smoking.status=c()
 risk.10yr=c()
 for(i in 1:2000)
@@ -104,10 +104,10 @@ output=data.frame(smoking.status,risk.10yr)
 output_filepath <- here("data", "output.csv")
 write.table(output,output_filepath,sep=",",col.names=T,row.names=F)
 
-#Q9 - num patients w/ TCHOL >6 OR (65+ yrs AND diabetic)
+#provide number of patients w/ TCHOL >6 OR (65+ yrs AND diabetic)
 print(sum((CompleteData[,"TCHOL"]>6)|((CompleteData[,"Age"]>65)&(CompleteData[,"Diabetic"]==1))))
 
-#Q10 - corrected risk for Yrs==0.5
+#correct risk for instances where Yrs==0.5
 risk.difference=as.numeric()
 for (i in 1:2000)
 {
