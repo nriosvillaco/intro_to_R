@@ -1,23 +1,18 @@
 #install.packages("psych")
 library(psych)
 
-#Q1 - create SMARTRISK function
-SMARTRISK=function(Data)
+#create function called SMARTRISK
+SMARTRISK = function(Data)
 {
-  linear.predictor=function(Data)
-  {
-    linear.predictor=(-0.0850*Data[1])+(0.00105*(Data[1]^2))+(0.156*Data[2])+
-      (0.262*Data[3])+(0.00429*Data[4])+(0.223*Data[5])+(0.140*Data[6])+
-      (0.406*Data[7])+(0.558*Data[8])+(0.283*Data[9])+(0.0229*Data[10])-
-      (0.426*Data[11])+(0.0959*Data[12])-(0.0532*Data[13])+
-      (0.000306*((Data[13])^2))+(0.139*Data[14])
-    return(linear.predictor) #return the SMARTRISK linear predictor as an output of the function
-  }
-SMARTRISK=(1-(0.81066^(exp(linear.predictor(Data)+2.099))))*100
-return(SMARTRISK)
+  Linear.predictor = -0.0850*Data$Age + 0.00105*(Data$Age^2) +
+    0.156*Data$Male + 0.262*Data$Smoker  + 0.00429*Data$Systolic +
+    0.223*Data$Diabetic + 0.140*Data$CAD + 0.406*Data$CVD + 0.558*Data$AAA +
+    0.283*Data$PAD + 0.0229*Data$Yrs - 0.426*Data$HDL + 0.0959*Data$TCHOL -
+    0.0532*Data$eGFR + 0.000306*(Data$eGFR^2) + 0.139*Data$loghsCRP
+  return((1-0.81066^exp(Linear.predictor + 2.099))*100)
 }
 
-#Q2 - initialize PATIENT1 data frame
+#initialize PATIENT1 data frame
 age=65
 male=0
 smoker=1
@@ -35,18 +30,18 @@ loghsCRP=1
 PATIENT1=data.frame(age,male,smoker,systolic,diabetic,CAD,CVD,AAA,PAD,yrs,HDL,
                     TCHOL,eGFR,loghsCRP)
 
-#Q3 - produce 10-yr SMART CVD event risk
+#produce 10-yr SMART CVD event risk using SMARTRISK
 SMARTRISK(PATIENT1)
 
-#Q4 - PATIENT2 data frame
+#produce 10-yr risk value using PATIENT2=PATIENT1 except is male
 PATIENT2=PATIENT1
 PATIENT2$male=1
 SMARTRISK(PATIENT2)
 
-#Q5 - difference in risk
+#calculate difference in risk between two patients
 SMARTRISK(PATIENT2)-SMARTRISK(PATIENT1)
 
-#Q6 - logSMART
+#create function called logSMART to calculate log-risk
 logSMART=function(Data)
 {  
   SMARTRISK=function(Data)
@@ -68,7 +63,7 @@ return(logSMART)
 }
 logSMART(PATIENT1)
 
-#Q7 - ratioSMART
+#create function called ratioSMART to calculate ratio of log-risk to risk
 ratioSMART=function(Data)  
 {  
   logSMART=function(Data)
@@ -95,7 +90,7 @@ return(ratioSMART)
 }
 ratioSMART(PATIENT2)
 
-#Q8 - SMARTRISK2
+#creat function SMARTRISK2 with 2 arguments: df of parameters and df of patient characteristics
 SMARTRISK2=function(Parameter,Data)
 {
   linear.predictor=function(Parameter,Data)
@@ -112,7 +107,7 @@ SMARTRISK2=function(Parameter,Data)
   return(SMARTRISK2)
 }
 
-#Q9 - initialize Parameters data frame, diff
+#initialize Parameters data frame, calculate different between SMARTRISK and SMARTRISK2
 age=-0.0850
 age2=0.00105
 male=0.156
@@ -133,6 +128,6 @@ Parameter=data.frame(age,age2,male,smoker,systolic,diabetic,CAD,CVD,AAA,PAD,yrs,
                     TCHOL,eGFR,eGFR2,loghsCRP)
 SMARTRISK(PATIENT1)-SMARTRISK2(Parameter,PATIENT1)
 
-#Q10 - geometric.mean
+#calculate geometric mean of SMART risk for patients 1 and 2
 x=as.numeric(c(SMARTRISK(PATIENT1),SMARTRISK(PATIENT2)))
 geometric.mean(x)
