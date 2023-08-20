@@ -32,8 +32,8 @@ lines(density(SMARTRISK(CompleteData[CompleteData$Race.Ethn=="Non-H Black",])))
 summary(lm(SMARTRISK(CompleteData)~CompleteData$Systolic))
 
 #create heatmap to visualize potential association between age and 10-yr risk
-CompleteData.AgeRisk=as.matrix(table(SMARTRISK(CompleteData),CompleteData$Age))
-heatmap(CompleteData.AgeRisk,Rowv=NA,Colv=NA,xlab="Age (years)",ylab="Risk (%)")
+Risk = table(cut(SMARTRISK(CompleteData),seq(0,100,10)),cut(CompleteData$Age,seq(40,80,5)))
+heatmap(Risk,Rowv=NA,Colv=NA,xlab="Age (years)",ylab="Risk (%)")
 
 #use 2-sample t-test to compare avg risk for Hisp. individuals vs. Non-H White ind.
 Hisp.risk=SMARTRISK(CompleteData[CompleteData$Race.Ethn=="Hispanic",])
